@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed:books": "node ./seeds/book.seed.js",
-    "prepare": "husky",
+    "prepare": "husky install",
     "lint": "eslint",
-    "start": "node --watch index.js"
+    "start:watch": "node --watch index.js",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
