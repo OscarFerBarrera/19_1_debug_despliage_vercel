@@ -1,30 +1,36 @@
 const express = require("express");
-
-// Conexión a la BBDD
-const { connect } = require("./db.js");
-connect();
-
-// Routes
 const { bookRouter } = require("./routes/book.routes.js");
 
-// Creamos router de expres
-const PORT = 3000;
-const server = express();
-const router = express.Router();
+const main = async () => {
+  // Conexión a la BBDD
+  const { connect } = require("./db.js");
+  const database = await connect();
 
-// Configuración del server
-server.use(express.json());
-server.use(express.urlencoded({ extended: false }));
+  // Creamos router de expres
+  const PORT = 3000;
+  const server = express();
+  // Configuración del server
+  server.use(express.json());
+  server.use(express.urlencoded({ extended: false }));
 
-// Ruta Home
-router.get("/", (req, res) => {
-  res.send("Esta es la home de nuestra API de Libros");
-});
+  // Rutas
+  const router = express.Router();
 
-// Usamos las rutas
-server.use("/", router);
-server.use("/book", bookRouter);
+  router.get("/", (req, res) => {
+    res.send(`Esta es la home de nuestra API de Libros. Estamos utilizando la BBDD de ${database.connection.name} `);
+  });
 
-server.listen(PORT, () => {
-  console.log(`Server levantado en el puerto ${PORT}`);
-});
+  router.get("*", (req, res) => {
+    res.status(404).send("Lo sentimos :( No hemos encontrado la página solicitada.");
+  });
+
+  // Usamos las rutas
+  server.use("/", router);
+  server.use("/book", bookRouter);
+
+  server.listen(PORT, () => {
+    console.log(`Server levantado en el puerto ${PORT}`);
+  });
+};
+
+main();

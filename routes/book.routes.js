@@ -4,10 +4,18 @@ const router = express.Router();
 const { Book } = require("../models/Book.js");
 
 // Rutas
-router.get("/", (req, res) => {
-  Book.find()
-    .then((books) => res.json(books))
-    .catch((error) => res.status(500).json(error));
+router.get("/", async (req, res) => {
+  try {
+    const books = await Book.find();
+    console.log(books)
+    if (books) {
+      res.json(books);
+    } else {
+      res.status(404).json({});
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
 
 router.get("/:id", (req, res) => {
