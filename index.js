@@ -20,9 +20,9 @@ const main = async () => {
     res.send(`Esta es la home de nuestra API de Libros. Estamos utilizando la BBDD de ${database.connection.name} `);
   });
 
-  router.get("*", (req, res) => {
-    res.status(404).send("Lo sentimos :( No hemos encontrado la página solicitada.");
-  });
+  // router.get("*", (req, res) => {
+  //   res.status(404).send("Lo sentimos :( No hemos encontrado la página solicitada.");
+  // });
 
   // Usamos las rutas
   server.use("/", router);
@@ -32,5 +32,4 @@ const main = async () => {
     console.log(`Server levantado en el puerto ${PORT}`);
   });
 };
-
 main();

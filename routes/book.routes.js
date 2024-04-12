@@ -3,11 +3,11 @@ const router = express.Router();
 
 const { Book } = require("../models/Book.js");
 
-// Rutas
+// Rutas, lista todos los libros
 router.get("/", async (req, res) => {
   try {
     const books = await Book.find();
-    console.log(books)
+    console.log(books);
     if (books) {
       res.json(books);
     } else {
@@ -17,28 +17,27 @@ router.get("/", async (req, res) => {
     res.status(500).json(error);
   }
 });
-
-router.get("/:id", (req, res) => {
+// busca un libro por id
+router.get("/:id", async (req, res) => {
   const id = req.params.id;
+  try {
+    const book = await Book.findById(id);
 
-  Book.findById(id)
-    .then((book) => {
-      if (book) {
-        res.json(book);
-      } else {
-        res.status(404).json({});
-      }
-    })
-    .catch((error) => res.status(500).json(error));
+    if (book) {
+      res.json(book);
+    } else {
+      res.status(404).json({});
+    }
+  } catch (error) {
+    res.status(500).json(error);
+  }
 });
-
+// Busca por el titulo del libro
 router.get("/title/:title", async (req, res) => {
   const title = req.params.title;
-
   try {
     // Busqueda exacta
     // const user = await User.find({ firstName: name });
-
     const book = await Book.find({ title: new RegExp("^" + title.toLowerCase(), "i") });
     if (book?.length) {
       res.json(book);
@@ -50,7 +49,7 @@ router.get("/title/:title", async (req, res) => {
   }
 });
 
-// Endpoint de creación de usuarios
+// Endpoint de creación de nuevo libro
 router.post("/", async (req, res) => {
   try {
     const book = new Book({
