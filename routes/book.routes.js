@@ -56,6 +56,7 @@ router.post("/", async (req, res) => {
       title: req.body.title,
       author: req.body.author,
       pages: req.body.pages,
+      publisher: req.body.publisher,
     });
 
     const createdBook = await book.save();
