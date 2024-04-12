@@ -9,6 +9,7 @@ const main = async () => {
   // Creamos router de expres
   const PORT = 3000;
   const server = express();
+
   // Configuración del server
   server.use(express.json());
   server.use(express.urlencoded({ extended: false }));
@@ -17,7 +18,7 @@ const main = async () => {
   const router = express.Router();
 
   router.get("/", (req, res) => {
-    res.send("Esta es la home de nuestra API de Libros.");
+    res.send(`Esta es la home de nuestra API de Libros. Estamos utilizando la BBDD de ${database.connection.name} `);
   });
 
   // router.get("*", (req, res) => {
