@@ -5,11 +5,25 @@ const { Book } = require("../models/Book.js");
 
 // Rutas, lista todos los libros
 router.get("/", async (req, res) => {
+  console.log("Me han pedio libros")
   try {
-    const books = await Book.find();
-    console.log(books);
+    const page = parseInt(req.query.page);
+    const limit = parseInt(req.query.limit);
+    const books = await Book.find()
+      .limit(limit)
+      .skip((page - 1) * limit);
+
+    // Num total de elementos
+    const totalElements = await Book.countDocuments();
+    const response = {
+      totalItems: totalElements,
+      totalPages: Math.ceil(totalElements / limit),
+      currentPage: page,
+      data: books,
+    };
+
     if (books) {
-      res.json(books);
+      res.json(response);
     } else {
       res.status(404).json({});
     }
@@ -35,10 +49,10 @@ router.get("/:id", async (req, res) => {
 // Busca por el titulo del libro
 router.get("/title/:title", async (req, res) => {
   const title = req.params.title;
+
   try {
-    // Busqueda exacta
-    // const user = await User.find({ firstName: name });
     const book = await Book.find({ title: new RegExp("^" + title.toLowerCase(), "i") });
+
     if (book?.length) {
       res.json(book);
     } else {
@@ -52,13 +66,7 @@ router.get("/title/:title", async (req, res) => {
 // Endpoint de creación de nuevo libro
 router.post("/", async (req, res) => {
   try {
-    const book = new Book({
-      title: req.body.title,
-      author: req.body.author,
-      pages: req.body.pages,
-      publisher: req.body.publisher,
-    });
-
+    const book = new Book(req.body);
     const createdBook = await book.save();
     return res.status(201).json(createdBook);
   } catch (error) {

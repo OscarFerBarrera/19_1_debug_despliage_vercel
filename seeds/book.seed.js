@@ -7,26 +7,46 @@ const bookList = [
     title: "Harry Potter",
     author: "J.K. Rowling",
     pages: 543,
+    publisher: {
+      name: "AAA",
+      country: "England"
+    }
   },
   {
     title: "1984",
     author: "George Orwell",
     pages: 328,
+    publisher: {
+      name: "Nueva Edit",
+      country: "EEUU"
+    }
   },
   {
     title: "To Kill a Mockingbird",
     author: "Harper Lee",
     pages: 281,
+    publisher: {
+      name: "Panamera",
+      country: "Francia"
+    }
   },
   {
     title: "The Great Gatsby",
     author: "F. Scott Fitzgerald",
     pages: 180,
+    publisher: {
+      name: "Mundo",
+      country: "Canada"
+    }
   },
   {
     title: "Pride and Prejudice",
     author: "Jane Austen",
     pages: 279,
+    publisher: {
+      name: "Canelo",
+      country: "España"
+    }
   },
 ];
 
