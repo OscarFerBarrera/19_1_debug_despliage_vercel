@@ -5,7 +5,6 @@ const { Author } = require("../models/Author.js");
 
 // Rutas, lista todos los autores
 router.get("/", async (req, res) => {
-  console.log("Me han pedio autores")
   try {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);

@@ -5,13 +5,13 @@ const { Book } = require("../models/Book.js");
 
 // Rutas, lista todos los libros
 router.get("/", async (req, res) => {
-  console.log("Me han pedio libros")
   try {
     const page = parseInt(req.query.page);
     const limit = parseInt(req.query.limit);
     const books = await Book.find()
       .limit(limit)
-      .skip((page - 1) * limit);
+      .skip((page - 1) * limit)
+      .populate("Author");
 
     // Num total de elementos
     const totalElements = await Book.countDocuments();
@@ -33,9 +33,9 @@ router.get("/", async (req, res) => {
 });
 // busca un libro por id
 router.get("/:id", async (req, res) => {
-  const id = req.params.id;
   try {
-    const book = await Book.findById(id);
+    const id = req.params.id;
+    const book = await Book.findById(id).populate("Author");
 
     if (book) {
       res.json(book);
@@ -51,7 +51,7 @@ router.get("/title/:title", async (req, res) => {
   const title = req.params.title;
 
   try {
-    const book = await Book.find({ title: new RegExp("^" + title.toLowerCase(), "i") });
+    const book = await Book.find({ title: new RegExp("^" + title.toLowerCase(), "i") }).populate("Author");
 
     if (book?.length) {
       res.json(book);

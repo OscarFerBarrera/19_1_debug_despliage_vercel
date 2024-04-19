@@ -7,6 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed:books": "node ./seeds/book.seed.js",
     "seed:authors": "node ./seeds/author.seed.js",
+    "seed:relations": "node ./seeds/book-relations.seed.js",
+    "seed:all": "npm run seed:books && npm run seed:authors && npm run seed:relations",
     "prepare": "husky install",
     "lint": "eslint",
     "start:watch": "node --watch index.js",

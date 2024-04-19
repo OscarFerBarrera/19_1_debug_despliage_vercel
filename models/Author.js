@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Creamos el schema del libro
+// Creamos el schema del autor
 const authorSchema = new Schema(
   {
     name: {
