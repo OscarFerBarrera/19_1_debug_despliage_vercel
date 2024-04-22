@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
     const books = await Book.find()
       .limit(limit)
       .skip((page - 1) * limit)
-      .populate("Author");
+      .populate("author");
 
     // Num total de elementos
     const totalElements = await Book.countDocuments();
