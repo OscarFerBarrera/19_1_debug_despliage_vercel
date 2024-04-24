@@ -8,7 +8,7 @@ const main = async () => {
   const database = await connect();
 
   // Creamos router de expres y Configuración del server
-  const PORT = 3001;
+  const PORT = 3000;
   const server = express();
   server.use(express.json());
   server.use(express.urlencoded({ extended: false }));

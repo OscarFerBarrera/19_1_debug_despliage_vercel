@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 const { Author } = require("../models/Author.js");
+const { Book } = require("../models/Book.js");
 
 // Rutas, lista todos los autores
 router.get("/", async (req, res) => {
@@ -32,12 +33,18 @@ router.get("/", async (req, res) => {
 });
 // busca un autor por id
 router.get("/:id", async (req, res) => {
-  const id = req.params.id;
   try {
+    const id = req.params.id;
     const author = await Author.findById(id);
 
     if (author) {
-      res.json(author);
+      const temporalAuthor = author.toObject();
+      const includeBooks = req.query.includeBooks === "true";
+      if (includeBooks) {
+        const books = await Book.find({ author: id });
+        temporalAuthor.books = books;
+      }
+      res.json(temporalAuthor);
     } else {
       res.status(404).json({});
     }

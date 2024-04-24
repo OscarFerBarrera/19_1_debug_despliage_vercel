@@ -11,8 +11,7 @@
     "seed:all": "npm run seed:books && npm run seed:authors && npm run seed:relations",
     "prepare": "husky install",
     "lint": "eslint",
-    "start:watch": "node --watch index.js",
-    "start": "node index.js"
+    "start": "node --watch index.js"
   },
   "repository": {
     "type": "git",
